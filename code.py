@@ -15,8 +15,8 @@ NUM_PIXELS = 100  # Number of pixels used in project
 NEOPIXEL_PIN = board.D5
 POWER_PIN = board.D10
 
-strip = neopixel.NeoPixel(NEOPIXEL_PIN, NUM_PIXELS, brightness=0.25, auto_write=False)
-strip.fill(0)
+strip = neopixel.NeoPixel(NEOPIXEL_PIN, NUM_PIXELS, brightness=1, auto_write=False)
+strip.fill(0)  # NeoPixels off ASAP on startup
 strip.show()
 
 #  default NeoPixel color is white
@@ -57,7 +57,17 @@ def lightning():
   flashDurationMin = 25
   flashDurationMax = 150
 
+  # time to next flash range - ms
+  nextFlashDelayMin = 25
+  nextFlashDelayMax = 75
+
+  # randomize pause between strikes
+  pauseBottom = 5000
+  pauseTop = 10000
+  strikeDelay = randrange(pauseBottom, pauseTop)
+
   # flash led while playing
+
   for flash in range(flashCount):
     pulse.animate()
     duration = randrange(flashDurationMin, flashDurationMax) / 1000
